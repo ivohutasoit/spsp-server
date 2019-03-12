@@ -1,5 +1,5 @@
 from flask import Flask
-from .controllers import category_controller
+from controllers import category_controller
 
 app = Flask(__name__)
 
