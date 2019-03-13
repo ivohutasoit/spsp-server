@@ -1,5 +1,5 @@
-from flask import Flask
-from controllers import category_controller
+from flask import Flask, jsonify, make_response
+from controllers import category_controller, tender_controller
 
 app = Flask(__name__)
 
@@ -7,7 +7,12 @@ app = Flask(__name__)
 def index(): 
     return 'Welcome to Pasang commerce service'
 
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
 app.register_blueprint(category_controller, url_prefix='/api/v1.0/commerce/categories')
+app.register_blueprint(tender_controller, url_prefix='/api/v1.0/commerce/tender')
 
 if __name__ == '__main__':
-    app.run(debug=True, port='5000')
+    app.run(host='0.0.0.0', port='5000', debug=True)
